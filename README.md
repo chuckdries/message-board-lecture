@@ -25,5 +25,11 @@ Install these before moving on:
     - You'll notice that our start script uses nodemon instead of node. Nodemon restarts our code for us, we installed it as a 'development dependency,' which you can see it's part of the 'devDependencies' section of our 'package.json'
     - You may also notice that you cannot run `nodemon` like a command. This is why we need to put it in our start script, because npm installed it into `node_modules`, but node_modules isn't were your computer looks for commands to run, but the start script knows to look there. In computer parlance, we say that nodemon is not in your `path`.
 
+## Branches  
+I'll be leaving a branch for the state of the code after every lecture. The branch for the code as it was at the end of lecture 1 is called `lecture-1`. I'll go over what branches are and how to use them on wednesday.
+
+Use `git checkout lecture-1` to open the code from lecture 1 (though I haven't actually changed anything meaningful yet).
+Use `git checkout master` to come back to the main code.
+
 ## Email me if you have any questions:
 cpdries@asu.edu
