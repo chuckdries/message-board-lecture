@@ -14,8 +14,7 @@ const messages = [
 ];
 app.get('/', (req, res) => {
     // res.send('<h1>hello world!</h1>');
-    // res.render('index', { messages });
-    res.send(JSON.stringify(messages));
+    res.render('index', { messages });
 });
 
 app.post('/message', (req, res) => {
