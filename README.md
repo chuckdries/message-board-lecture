@@ -24,3 +24,6 @@ Install these before moving on:
     - However, we defined a "start" script, so you can also run `npm start`
     - You'll notice that our start script uses nodemon instead of node. Nodemon restarts our code for us, we installed it as a 'development dependency,' which you can see it's part of the 'devDependencies' section of our 'package.json'
     - You may also notice that you cannot run `nodemon` like a command. This is why we need to put it in our start script, because npm installed it into `node_modules`, but node_modules isn't were your computer looks for commands to run, but the start script knows to look there. In computer parlance, we say that nodemon is not in your `path`.
+
+## Email me if you have any questions:
+cpdries@asu.edu
