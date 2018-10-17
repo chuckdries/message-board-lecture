@@ -4,16 +4,14 @@ const bodyParser = require('body-parser');
 
 app.set('view engine', 'twig');
 app.use(bodyParser.urlencoded({ extended: false }));
+app.disable('view cache');
 
 const messages = [
     "howdy",
-    "hey there",
-    "new message",
-    "new new message"
+    "hey there"
 ];
 
 app.get('/', (req, res) => {
-    // res.send('<h1>hello world!</h1>');
     res.render('index', { messages });
 });
 
