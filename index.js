@@ -1,6 +1,5 @@
 const express = require('express');
 const app = express();
-const twig = require('twig');
 const bodyParser = require('body-parser');
 
 app.set('view engine', 'twig');
@@ -12,6 +11,7 @@ const messages = [
     "new message",
     "new new message"
 ];
+
 app.get('/', (req, res) => {
     // res.send('<h1>hello world!</h1>');
     res.render('index', { messages });
@@ -20,6 +20,10 @@ app.get('/', (req, res) => {
 app.post('/message', (req, res) => {
     messages.push(req.body.message);
     res.redirect('/');
+})
+
+app.use((req, res) => {
+    res.status(404).send('file not found');
 })
 
 app.listen(3000);
