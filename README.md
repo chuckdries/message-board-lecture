@@ -33,3 +33,6 @@ Use `git checkout master` to come back to the main code.
 
 ## Email me if you have any questions:
 cpdries@asu.edu
+
+## Office Hours
+Friday, October 19 @ 3:00pm on https://twitch.tv/chuckletmilk
