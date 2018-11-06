@@ -27,22 +27,37 @@ const authorize = async (req, res, next) => {
     const db = await dbPromise;
     const sessionToken = req.cookies.sessionToken;
     if(!sessionToken) {
-        res.status(401).send('not logged in');
+        next();
+        return;
+    };
+    const user = await db.get('SELECT users.email, users.id as id FROM sessions LEFT JOIN users ON sessions.userid = users.id WHERE sessionToken=?', sessionToken);
+    if(!user) {
+        next();
+        return;
+    };
+    console.log('logged in', user.email);
+    req.user = user;
+    next();
+    return;
+}
+
+const requireAuth = (req, res, next) => {
+    if (!req.user) {
+        res.status(401).send('please log in');
         return;
     }
-    const user = await db.get('SELECT users.email, users.id as id FROM sessions LEFT JOIN users ON sessions.userid = users.id WHERE sessionToken=?', sessionToken);
-    console.log(user);
-    req.user = user;
     next();
 }
 
-app.get('/', authorize, async (req, res) => {
+app.use(authorize);
+
+app.get('/', async (req, res) => {
     const db = await dbPromise;
     const messages = await db.all('SELECT * FROM messages;');
-    res.render('index', { messages, user });
+    res.render('index', { messages, user: req.user });
 });
 
-app.post('/message', authorize, async (req, res) => {
+app.post('/message', requireAuth, async (req, res) => {
     const db = await dbPromise;
     await db.run('INSERT INTO messages (author, message) VALUES (?, ?)', req.body.author, req.body.message);
     res.redirect('/');
@@ -73,6 +88,13 @@ app.post('/login', async (req, res) => {
     } else {
         res.status(401).send('email or password is incorrect');
     }
+})
+
+app.get('/logout', async (req, res) => {
+    const db = await dbPromise;
+    res.cookie('sessionToken', '', { maxAge: 0 });
+    await db.run('DELETE FROM sessions WHERE sessionToken=?', req.cookies.sessionToken);
+    res.redirect('/');
 })
 
 app.get('/databasedump', async (req, res) => {
