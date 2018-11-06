@@ -35,7 +35,7 @@ const authorize = async (req, res, next) => {
         next();
         return;
     }
-    console.log('logged in', user.email); // eslint-disable-line no-console
+    console.log('authenticated request from', user.email); // eslint-disable-line no-console
     req.user = user;
     next();
     return;

@@ -8,15 +8,19 @@
             color: #333;
             max-width: 800px;
             margin: auto;
-            padding: 30px;
+            padding: 0 30px 10px 30px;
+            display: flex;
+            flex-direction: column;
         }
     </style>
 </head>
 <body>
     <h1>Messages</h1>
-    {% for message in messages %}
-        <p>{{message.author}}: {{message.message}}</p>
-    {% endfor %}
+    <div style="flex: 1 1 auto">
+        {% for message in messages %}
+            <p>{{message.author}}: {{message.message}}</p>
+        {% endfor %}
+    </div>
     {% if not user %}
         <h2>Please log in to send a message</h2>
         <form method="POST" action="/login">
