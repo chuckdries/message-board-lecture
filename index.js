@@ -19,7 +19,7 @@ dbPromise.then(async (db) => {
     await db.run('CREATE TABLE IF NOT EXISTS messages ( id INTEGER PRIMARY KEY, author STRING, message STRING );');
     await db.run('CREATE TABLE IF NOT EXISTS users ( id INTEGER PRIMARY KEY, email STRING, passwordHash STRING );');
     await db.run('CREATE TABLE IF NOT EXISTS sessions ( id INTEGER PRIMARY KEY, userid INTEGER, sessionToken STRING );');
-})
+});
 
 // TODO: separate requireLogin function
 const authorize = async (req, res, next) => {
@@ -39,7 +39,7 @@ const authorize = async (req, res, next) => {
     req.user = user;
     next();
     return;
-}
+};
 
 const requireAuth = (req, res, next) => {
     if (!req.user) {
@@ -47,7 +47,7 @@ const requireAuth = (req, res, next) => {
         return;
     }
     next();
-}
+};
 
 app.use(authorize);
 
