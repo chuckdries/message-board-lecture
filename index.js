@@ -5,7 +5,7 @@ const app = express();
 const sqlite = require('sqlite');
 const bcrypt = require('bcrypt');
 const uuidv4 = require('uuid/v4');
-const cookieParser = require('cookie-parser')
+const cookieParser = require('cookie-parser');
 
 
 app.set('view engine', 'twig');
@@ -29,13 +29,13 @@ const authorize = async (req, res, next) => {
     if(!sessionToken) {
         next();
         return;
-    };
+    }
     const user = await db.get('SELECT users.email, users.id as id FROM sessions LEFT JOIN users ON sessions.userid = users.id WHERE sessionToken=?', sessionToken);
     if(!user) {
         next();
         return;
-    };
-    console.log('logged in', user.email);
+    }
+    console.log('logged in', user.email); // eslint-disable-line no-console
     req.user = user;
     next();
     return;
@@ -68,7 +68,7 @@ app.post('/register', async (req, res) => {
     const passwordHash = await bcrypt.hash(req.body.password, saltRounds);
     await db.run('INSERT INTO users (email, passwordHash)  VALUES (?, ?);', req.body.email, passwordHash);
     const users = await db.all('SELECT * FROM users');
-    console.log(users);
+    console.log('user registered', users[users.length-1].email); // eslint-disable-line no-console
     res.redirect('/');
 });
 
@@ -88,14 +88,14 @@ app.post('/login', async (req, res) => {
     } else {
         res.status(401).send('email or password is incorrect');
     }
-})
+});
 
 app.get('/logout', async (req, res) => {
     const db = await dbPromise;
     res.cookie('sessionToken', '', { maxAge: 0 });
     await db.run('DELETE FROM sessions WHERE sessionToken=?', req.cookies.sessionToken);
     res.redirect('/');
-})
+});
 
 app.get('/databasedump', async (req, res) => {
     const db = await dbPromise;
@@ -108,12 +108,12 @@ app.get('/databasedump', async (req, res) => {
         users,
         messages,
         sessions
-    })
-})
+    });
+});
 
 app.use((req, res) => {
     res.status(404).send('file not found');
-})
+});
 
 app.listen(3000);
-console.log('listening on port 3000');
+console.log('listening on port 3000'); // eslint-disable-line no-console
