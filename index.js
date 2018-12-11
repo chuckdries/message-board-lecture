@@ -1,4 +1,3 @@
-//NOTE: this code currently does not work!
 const bodyParser = require('body-parser');
 const express = require('express');
 const app = express();
