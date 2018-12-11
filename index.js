@@ -48,6 +48,7 @@ const requireAuth = (req, res, next) => {
 };
 
 app.use(authorize);
+app.use('/public', express.static('public'));
 
 app.get('/', async (req, res) => {
     const db = await dbPromise;
