@@ -92,7 +92,7 @@ app.post('/register', async (req, res) => {
         req.body.email,
         passwordHash
     );
-    const newUser = db.get('SELECT id, email FROM users WHERE email=?', req.body.email);
+    const newUser = await db.get('SELECT id, email FROM users WHERE email=?', req.body.email);
     const sessionToken = uuidv4();
     await db.run(
         'INSERT INTO sessions (userid, sessionToken) VALUES (?, ?);',
