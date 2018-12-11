@@ -21,9 +21,7 @@ dbPromise.then(async (db) => {
     await db.run('CREATE TABLE IF NOT EXISTS sessions ( id INTEGER PRIMARY KEY, userid INTEGER, sessionToken STRING );');
 });
 
-//asdf
 const authorize = async (req, res, next) => {
-    // const { sessionToken } = req.cookies;
     const db = await dbPromise;
     const sessionToken = req.cookies.sessionToken;
     if(!sessionToken) {
@@ -129,6 +127,7 @@ app.get('/logout', async (req, res) => {
     res.redirect('/');
 })
 
+// don't use this in a real thing lol
 app.get('/databasedump', async (req, res) => {
     const db = await dbPromise;
     const tables = await db.all('SELECT name FROM sqlite_master WHERE type="table"');
