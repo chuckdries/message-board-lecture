@@ -34,7 +34,7 @@ const authorize = async (req, res, next) => {
         next();
         return;
     };
-    console.log('logged in', user.email);
+    console.log('authenticated request from user ', user.email);
     req.user = user;
     next();
     return;
