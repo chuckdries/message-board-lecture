@@ -11,6 +11,7 @@ const cookieParser = require('cookie-parser')
 app.set('view engine', 'twig');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use('/public', express.static('public'));
 app.disable('view cache');
 const saltRounds = 10;
 const dbPromise = sqlite.open('./data.db');
@@ -48,7 +49,6 @@ const requireAuth = (req, res, next) => {
 };
 
 app.use(authorize);
-app.use('/public', express.static('public'));
 
 app.get('/', async (req, res) => {
     const db = await dbPromise;
@@ -147,5 +147,5 @@ app.use((req, res) => {
     res.status(404).send('file not found');
 })
 
-app.listen(3000);
+app.listen(8123);
 console.log('listening on port 3000');
